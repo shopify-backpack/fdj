@@ -32,7 +32,7 @@ server.register(swaggerUi, {
     docExpansion: "full",
     deepLinking: true,
   },
-  staticCSP: true,
+  staticCSP: false,
   transformStaticCSP: (header) => header,
   transformSpecification: (swaggerObject) => {
     return swaggerObject;

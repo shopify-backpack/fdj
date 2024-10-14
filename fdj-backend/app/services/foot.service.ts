@@ -1,4 +1,4 @@
-import { Like } from "typeorm";
+import { ILike } from "typeorm";
 import { League, Player, Team } from "../../entities";
 import { AppDataSource } from "../../libs/db";
 
@@ -9,7 +9,7 @@ const playerRepository = AppDataSource.getRepository(Player);
 export const getAll = async (searchString: string) => {
   return leagueRepository.find({
     where: {
-      name: Like(`%${searchString}%`),
+      name: ILike(`%${searchString}%`),
     },
   });
 };
