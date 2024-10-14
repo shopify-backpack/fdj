@@ -1,0 +1,21 @@
+@if (loading) {
+<p>Loading...</p>
+}
+
+<div class="player-card-container">
+  <div class="player-card" *ngFor="let player of players">
+    <img
+      [src]="player.thumbnail"
+      alt="{{ player.name }} thumbnail"
+      class="player-thumbnail"
+    />
+    <div class="player-details">
+      <h2>{{ player.name }}</h2>
+      <p>Position: {{ player.position }}</p>
+      <p>
+        Amount:
+        {{ player.signinAmount }} {{ player.signinCurrency }}
+      </p>
+    </div>
+  </div>
+</div>

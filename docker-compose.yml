@@ -1,0 +1,23 @@
+services:
+  fdj-db:
+    image: postgres:15.4
+    hostname: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=fdj
+    networks:
+      - fdj
+
+  fdj-backend:
+    build:
+      context: .
+      dockerfile: ./fdj-backend/Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - fdj
+
+networks:
+  fdj:
+    driver: bridge

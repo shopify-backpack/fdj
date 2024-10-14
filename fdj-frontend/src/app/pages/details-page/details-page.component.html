@@ -1,0 +1,20 @@
+@if (loading) {
+<p>Loading...</p>
+}
+
+<div class="team-card-container">
+  <div
+    class="team-card"
+    *ngFor="let team of teams"
+    (click)="onSelectTeams(team.id)"
+  >
+    <img
+      [src]="team.thumbnail"
+      alt="{{ team.name }} thumbnail"
+      class="team-thumbnail"
+    />
+    <div class="team-details">
+      <h2>{{ team.name }}</h2>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+name: Deploy Node.js and Angular App to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install and Build Angular App
+        working-directory: ./fdj-frontend
+        run: |
+          npm install
+          npm run build --prod
+
+      - name: Install Node.js Dependencies
+        working-directory: ./fdj-backend
+        run: |
+          npm install
+
+      - name: Run Node.js in Production
+        working-directory: ./fdj-backend
+        run: |
+          npm run prod
+
+      - name: Deploy Angular to Production
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.PROD_SERVER_HOST }}
+          username: ${{ secrets.PROD_SERVER_USER }}
+          key: ${{ secrets.PROD_SERVER_KEY }}
+          script: |
+            cd /usr/app/fdj-frontend
+            git pull origin main
+            npm install
+            npm run build --prod
+
+      - name: Deploy Node.js to Production
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.PROD_SERVER_HOST }}
+          username: ${{ secrets.PROD_SERVER_USER }}
+          key: ${{ secrets.PROD_SERVER_KEY }}
+          script: |
+            cd /usr/app/fdj-backend
+            git pull origin main
+            npm install
+            npm run prod

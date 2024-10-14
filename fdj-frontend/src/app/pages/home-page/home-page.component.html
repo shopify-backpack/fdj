@@ -1,0 +1,10 @@
+<p-autoComplete
+  [(ngModel)]="inputValue"
+  [suggestions]="suggestions"
+  (completeMethod)="onInputChange($event)"
+  placeholder="Rechercher"
+  emptyMessage="Aucun league"
+  field="name"
+  (onSelect)="onSelectLeague($event.value)"
+/>
+
